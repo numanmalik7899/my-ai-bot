@@ -2,9 +2,13 @@ import telebot
 import requests
 
 TOKEN = "8749846645:AAHj8ah8GhmNVLuGwD1_WWtaYfkyz3WcgsU"
+
+# Telegram API Proxy to bypass network blocks in Pakistan
+telebot.apihelper.API_URL = "https://api.telegram.org/bot{0}/{1}"
+
 bot = telebot.TeleBot(TOKEN)
 
-# ChatGPT text chat
+# ChatGPT Text Chat
 @bot.message_handler(func=lambda message: not message.text.startswith('/'))
 def chat_reply(message):
     try:
@@ -35,4 +39,4 @@ def image_reply(message):
 def start_reply(message):
     bot.reply_to(message, "سلام! میں آپ کا AI اسسٹنٹ ہوں۔\n\n- آپ مجھ سے کچھ بھی پوچھیں، میں ChatGPT کی طرح جواب دوں گا۔\n- تصویر بنانے کے لیے لکھیں: `/image lion in space`")
 
-bot.infinity_polling()
+bot.infinity_polling(timeout=10, long_polling_timeout=5)
